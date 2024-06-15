@@ -1,6 +1,19 @@
+using BookStore_API.Data;
+using Microsoft.EntityFrameworkCore;
+using Serilog;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+Log.Logger = new LoggerConfiguration().MinimumLevel.Error()
+    .MinimumLevel.Debug().WriteTo.File("log/bookStoreLogs.txt", rollingInterval: RollingInterval.Hour).CreateLogger();
+
+
+builder.Host.UseSerilog();
+builder.Services.AddDbContext<ApplicationDbContext>(options =>
+{
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultSQLConnection"));
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
