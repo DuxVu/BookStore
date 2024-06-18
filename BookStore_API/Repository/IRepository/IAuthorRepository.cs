@@ -1,6 +1,9 @@
-﻿namespace BookStore_API.Repository.IRepository
+﻿using BookStore_API.Models;
+
+namespace BookStore_API.Repository.IRepository
 {
-    public class IAuthorRepository
+    public interface IAuthorRepository : IRepository<Author>
     {
+        Task<Author> UpdateAsync(Author entity);
     }
 }

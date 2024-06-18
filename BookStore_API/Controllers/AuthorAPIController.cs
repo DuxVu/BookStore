@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 using System.Collections.Generic;
 using BookStore_API.Repository.IRepository;
+using Microsoft.AspNetCore.Http.HttpResults;
 using MediatR;
 using BookStore_API.Mediator.Querry;
 using BookStore_API.Mediator.Command;
@@ -16,74 +17,68 @@ namespace BookStore_API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BookStoreAPIController : ControllerBase
+    public class AuthorAPIController : ControllerBase
     {
+
         private readonly ILogger<BookStoreAPIController> _logger;
         private readonly IMediator _mediator;
 
-        public BookStoreAPIController(ILogger<BookStoreAPIController> logger, IMediator mediator)
+        public AuthorAPIController(ILogger<BookStoreAPIController> logger, IMediator mediator)
         {
             _logger = logger;
             _mediator = mediator;
         }
 
-        [HttpGet("GetBooks")]
+        [HttpGet("GetAuthors")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<IEnumerable<BookDTO>>> GetBooks([FromHeader] GetAllBooksQuerry getAllBooksQuerry)
+        public async Task<ActionResult<IEnumerable<AuthorDTO>>> GetAuthors([FromHeader]GetAllAuthorsQuerry getAllAuthorsQuerry)
         {
-            return Ok(await _mediator.Send(getAllBooksQuerry));
+            return Ok(await _mediator.Send(getAllAuthorsQuerry));
         }
 
-        [HttpGet("GetBook/{Id:int}", Name = "GetBook")]
+        [HttpGet("GetAuthor/{Id:int}", Name = "GetAuthor")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<BookDTO>> GetBook([FromRoute] GetBookQuerry getBookQuerry)
+        public async Task<ActionResult<AuthorDTO>> GetAuthor([FromRoute] GetAuthorQuerry getAuthorQuerry)
         {
-            return Ok(await _mediator.Send(getBookQuerry));
+            return Ok(await _mediator.Send(getAuthorQuerry));
         }
 
-        [HttpPost("CreateBook")]
+        [HttpPost("CreateAuthor")]
         [ProducesResponseType(StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<ActionResult<BookDTO>> CreateBook([FromBody] CreateBookCommand createBookCommand)
+        public async Task<ActionResult<AuthorDTO>> CreateAuthor([FromBody] CreateAuthorCommand createAuthorCommand)
         {
-            var result = await _mediator.Send(createBookCommand);
-            return CreatedAtRoute("GetBook", new { Id = result.BookId }, result);
+            var result = await _mediator.Send(createAuthorCommand);
+            return CreatedAtRoute("GetAuthor", new { Id = result.AuthorId }, result);
         }
 
 
-        [HttpDelete("DeleteBook/{Id:int}", Name = "DeleteBook")]
+        [HttpDelete("DeleteAuthor/{Id:int}", Name = "DeleteAuthor")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> DeleteBook([FromRoute] DeleteBookCommand createBookCommand)
+        public async Task<IActionResult> DeleteAuthor([FromRoute] DeleteAuthorCommand deleteAuthorCommand)
         {
-            bool result = await _mediator.Send(createBookCommand);
+            bool result = await _mediator.Send(deleteAuthorCommand);
             if (result)
                 return NoContent();
             else
                 throw new Exception();
         }
 
-        [HttpPut("UpdateBook/{Id:int}", Name = "UpdateBook")]
+        [HttpPut("UpdateAuthor/{Id:int}", Name = "UpdateAuthor")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateBook(int bookId, [FromBody] UpdateBookCommand updateBookCommand)
+        public async Task<IActionResult> UpdateAuthor(int authorId, [FromBody] UpdateAuthorCommand updateAuthorCommand)
         {
-            bool result = await _mediator.Send(updateBookCommand);
+            bool result = await _mediator.Send(updateAuthorCommand);
             if (result)
                 return NoContent();
             else
                 throw new Exception();
-        }
-
-        [HttpGet("GetBookByAuthorID/{AuthorId:int}", Name = "GetBookByAuthorID")]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<BookDTO>>GetBookByAuthor([FromRoute] GetBookByAuthorQuerry getBookByAuthorQuerry)
-        {
-            return Ok(await _mediator.Send(getBookByAuthorQuerry));
         }
     }
 }

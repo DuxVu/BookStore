@@ -2,15 +2,11 @@
 
 namespace BookStore_API.Models.DTO
 {
-    public class BookDTO
+    public class AuthorUpdateDTO
     {
         [Required]
-        public int BookId { get; set; }
-        [Required]
         public int AuthorId { get; set; }
-
         [Required]
-        public string Ttitle { get; set; }
-        public string? Subtitle { get; set; }
+        public string Name { get; set; }
     }
 }
