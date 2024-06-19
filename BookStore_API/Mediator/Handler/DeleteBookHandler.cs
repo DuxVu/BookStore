@@ -10,7 +10,7 @@ using System.Runtime.CompilerServices;
 
 namespace BookStore_API.Mediator.Handler
 {
-    public class DeleteBookHandler : IRequestHandler<DeleteBookCommand, bool>
+    public class DeleteBookHandler : IRequestHandler<DeleteBookCommand, Unit>
     {
         private readonly IBookRepository _dbBook;
         public DeleteBookHandler(IBookRepository dbBook)
@@ -18,7 +18,7 @@ namespace BookStore_API.Mediator.Handler
             _dbBook = dbBook;
         }
 
-        public async Task<bool> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(DeleteBookCommand request, CancellationToken cancellationToken)
         {
             var book = await _dbBook.GetAsync(x => x.BookId == request.Id);
             if (book == null)
@@ -26,7 +26,7 @@ namespace BookStore_API.Mediator.Handler
                 throw new CustomValidationException(HttpStatusCode.NotFound, "The book with the given ID does not exist.", DateTime.Now);
             }
             await _dbBook.DeleteAsync(book);
-            return true;
+            return Unit.Value;
         }
     }
 }

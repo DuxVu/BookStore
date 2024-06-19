@@ -21,10 +21,6 @@ namespace BookStore_API.Mediator.Handler
 
         public async Task<BookDTO> Handle(CreateBookCommand request, CancellationToken cancellationToken)
         {
-            if (await _dbBook.GetAsync(x => x.Ttitle.ToLower() == request.BookCreateDTO.Ttitle.ToLower()) != null)
-            {
-                throw new CustomValidationException(HttpStatusCode.BadRequest, "The book with that name already exists!", DateTime.Now);
-            }
             if (request.BookCreateDTO == null)
             {
                 throw new CustomValidationException(HttpStatusCode.BadRequest, "Bad request!", DateTime.Now);

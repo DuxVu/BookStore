@@ -21,5 +21,10 @@ namespace BookStore_API.Repository
             await _db.SaveChangesAsync();
             return entity;
         }
+
+        public async Task<Author> GetAuthorWithBooksAsync(int authorId)
+        {
+            return await GetWithIncludeAsync(a => a.AuthorId == authorId, a => a.Books);
+        }
     }
 }

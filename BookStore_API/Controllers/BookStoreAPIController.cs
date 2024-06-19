@@ -60,11 +60,8 @@ namespace BookStore_API.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> DeleteBook([FromRoute] DeleteBookCommand createBookCommand)
         {
-            bool result = await _mediator.Send(createBookCommand);
-            if (result)
-                return NoContent();
-            else
-                throw new Exception();
+            await _mediator.Send(createBookCommand);
+            return NoContent();
         }
 
         [HttpPut("UpdateBook/{Id:int}", Name = "UpdateBook")]
@@ -72,16 +69,13 @@ namespace BookStore_API.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> UpdateBook(int bookId, [FromBody] UpdateBookCommand updateBookCommand)
         {
-            bool result = await _mediator.Send(updateBookCommand);
-            if (result)
-                return NoContent();
-            else
-                throw new Exception();
+            await _mediator.Send(updateBookCommand);
+            return NoContent();
         }
 
         [HttpGet("GetBookByAuthorID/{AuthorId:int}", Name = "GetBookByAuthorID")]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<ActionResult<BookDTO>>GetBookByAuthor([FromRoute] GetBookByAuthorQuerry getBookByAuthorQuerry)
+        public async Task<ActionResult<List<BookDTO>>>GetBookByAuthor([FromRoute] GetBookByAuthorQuerry getBookByAuthorQuerry)
         {
             return Ok(await _mediator.Send(getBookByAuthorQuerry));
         }

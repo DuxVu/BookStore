@@ -6,8 +6,8 @@ namespace BookStore_API.Data
     {
         public static List<BookDTO> booksList = new List<BookDTO>()
         {
-            new BookDTO{BookId = 1, Ttitle = "Lord of the rings"},
-            new BookDTO{BookId = 2, Ttitle = "Harry Potter"}
+            new BookDTO{BookId = 1, Title = "Lord of the rings"},
+            new BookDTO{BookId = 2, Title = "Harry Potter"}
         };
     }
 }

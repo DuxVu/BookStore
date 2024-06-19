@@ -3,7 +3,7 @@ using MediatR;
 
 namespace BookStore_API.Mediator.Querry
 {
-    public class GetBookByAuthorQuerry : IRequest<List<BookDTO>>
+    public class GetAuthorWithBooksQuery : IRequest<AuthorDTO>
     {
         public int AuthorId { get; set; }
     }

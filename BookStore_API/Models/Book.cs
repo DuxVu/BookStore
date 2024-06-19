@@ -15,10 +15,10 @@ namespace BookStore_API.Models
 
         [MinLength(3)]
         [MaxLength(100)]
-        public string Ttitle { get; set; }
-        public string Subtitle { get; set; }
+        public string Title { get; set; }
+        public string? Subtitle { get; set; }
 
-        public bool IsActive { get; set; }
+        public bool? IsActive { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime ModifyDate { get; set; }
     }

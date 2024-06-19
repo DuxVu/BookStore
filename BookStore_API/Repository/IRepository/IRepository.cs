@@ -9,5 +9,7 @@ namespace BookStore_API.Repository.IRepository
         Task CreateAsync(T entity);
         Task DeleteAsync(T entity);
         Task SaveAsync();
+        Task<T> GetWithIncludeAsync(Expression<Func<T, bool>> filter, params Expression<Func<T, object>>[] includes);
+
     }
 }

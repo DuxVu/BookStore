@@ -5,5 +5,7 @@ namespace BookStore_API.Repository.IRepository
     public interface IAuthorRepository : IRepository<Author>
     {
         Task<Author> UpdateAsync(Author entity);
+
+        Task<Author> GetAuthorWithBooksAsync(int authorId);
     }
 }

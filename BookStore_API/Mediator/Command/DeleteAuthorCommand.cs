@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace BookStore_API.Mediator.Command
 {
-    public class DeleteAuthorCommand : IRequest<bool>
+    public class DeleteAuthorCommand : IRequest<Unit>
     {
         public int Id { get; set; }
     }

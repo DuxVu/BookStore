@@ -9,7 +9,7 @@ using System.Net;
 
 namespace BookStore_API.Mediator.Handler
 {
-    public class UpdateBookHandler : IRequestHandler<UpdateBookCommand, bool>
+    public class UpdateBookHandler : IRequestHandler<UpdateBookCommand, Unit>
     {
         private readonly IMapper _mapper;
         private readonly IBookRepository _dbBook;
@@ -20,7 +20,7 @@ namespace BookStore_API.Mediator.Handler
             _dbBook = dbBook;
         }
 
-        public async Task<bool> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
+        public async Task<Unit> Handle(UpdateBookCommand request, CancellationToken cancellationToken)
         {
             if (request.BookUpdateDTO == null)
             {
@@ -30,7 +30,7 @@ namespace BookStore_API.Mediator.Handler
             Book book = _mapper.Map<Book>(request.BookUpdateDTO);
 
             await _dbBook.UpdateAsync(book);
-            return true;
+            return Unit.Value;
         }
     }
 }

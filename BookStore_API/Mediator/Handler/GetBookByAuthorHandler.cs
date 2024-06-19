@@ -8,7 +8,7 @@ using System.Net;
 
 namespace BookStore_API.Mediator.Handler
 {
-    public class GetBookByAuthorHandler : IRequestHandler<GetBookByAuthorQuerry, BookDTO>
+    public class GetBookByAuthorHandler : IRequestHandler<GetBookByAuthorQuerry, List<BookDTO>>
     {
         private readonly IMapper _mapper;
         private readonly IBookRepository _dbBook;
@@ -19,19 +19,19 @@ namespace BookStore_API.Mediator.Handler
             _dbBook = dbBook;
         }
 
-        public async Task<BookDTO> Handle(GetBookByAuthorQuerry request, CancellationToken cancellationToken)
+        public async Task<List<BookDTO>> Handle(GetBookByAuthorQuerry request, CancellationToken cancellationToken)
         {
             if (request.AuthorId == 0)
             {
                 throw new CustomValidationException(HttpStatusCode.BadRequest, "Id cannot be 0", DateTime.Now);
             }
 
-            var book = await _dbBook.GetAsync(x => x.AuthorId == request.AuthorId);
+            var book = await _dbBook.GetAllAsync(x => x.AuthorId == request.AuthorId);
             if (book == null)
             {
                 throw new CustomValidationException(HttpStatusCode.NotFound, "The book with the given ID does not exist.", DateTime.Now);
             }
-            return _mapper.Map<BookDTO>(book);
+            return _mapper.Map<List<BookDTO>>(book);
         }
     }
 }
