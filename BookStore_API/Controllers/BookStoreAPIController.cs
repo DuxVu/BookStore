@@ -64,10 +64,10 @@ namespace BookStore_API.Controllers
             return NoContent();
         }
 
-        [HttpPut("UpdateBook/{Id:int}", Name = "UpdateBook")]
+        [HttpPut("UpdateBook", Name = "UpdateBook")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateBook(int bookId, [FromBody] UpdateBookCommand updateBookCommand)
+        public async Task<IActionResult> UpdateBook([FromBody] UpdateBookCommand updateBookCommand)
         {
             await _mediator.Send(updateBookCommand);
             return NoContent();

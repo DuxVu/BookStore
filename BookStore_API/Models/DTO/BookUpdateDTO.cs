@@ -9,7 +9,7 @@ namespace BookStore_API.Models.DTO
         [Required]
         public int AuthorId { get; set; }
         [Required]
-        public string Ttitle { get; set; }
+        public string Title { get; set; }
         public string? Subtitle { get; set; }
     }
 }

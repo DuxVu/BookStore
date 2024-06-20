@@ -20,10 +20,10 @@ namespace BookStore_API.Controllers
     public class AuthorAPIController : ControllerBase
     {
 
-        private readonly ILogger<BookStoreAPIController> _logger;
+        private readonly ILogger<AuthorAPIController> _logger;
         private readonly IMediator _mediator;
 
-        public AuthorAPIController(ILogger<BookStoreAPIController> logger, IMediator mediator)
+        public AuthorAPIController(ILogger<AuthorAPIController> logger, IMediator mediator)
         {
             _logger = logger;
             _mediator = mediator;
@@ -66,10 +66,10 @@ namespace BookStore_API.Controllers
             return NoContent();
         }
 
-        [HttpPut("UpdateAuthor/{Id:int}", Name = "UpdateAuthor")]
+        [HttpPut("UpdateAuthor", Name = "UpdateAuthor")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> UpdateAuthor(int authorId, [FromBody] UpdateAuthorCommand updateAuthorCommand)
+        public async Task<IActionResult> UpdateAuthor([FromBody] UpdateAuthorCommand updateAuthorCommand)
         {
             await _mediator.Send(updateAuthorCommand);
             return NoContent();
